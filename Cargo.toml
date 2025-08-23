@@ -1,0 +1,16 @@
+[package]
+name = "bililive_bark"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bark_rs = { version = "0.1.1", features = ["async"] }
+bollard = "0.19.2"
+eros = "0.1.0"
+futures-util = "0.3.31"
+logfmt = { git = "https://github.com/ch1y1z1/logfmt.git", version = "0.0.2" }
+serde = { version = "1.0.219", features = ["derive"] }
+serde-value = "0.7.0"
+tokio = "1.47.1"
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
