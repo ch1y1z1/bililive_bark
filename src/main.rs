@@ -11,9 +11,9 @@ use tracing::{error, info};
 
 #[derive(Parser)]
 struct Args {
-    #[arg(short('n'), long)]
+    #[arg(short('n'), long, env)]
     container_name: String,
-    #[arg(short('k'), long)]
+    #[arg(short('k'), long, env)]
     bark_key: String,
 }
 static ARGS: LazyLock<Args> = LazyLock::new(|| Args::parse());
