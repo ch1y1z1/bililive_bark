@@ -1,16 +1,24 @@
 mod parse;
 
-use std::sync::LazyLock;
-
 use bark_rs::AsyncBarkClient;
 use bollard::{Docker, container::LogOutput, query_parameters::LogsOptions};
+use clap::Parser;
 use eros::{IntoDynTracedError, Result};
 use futures_util::stream::StreamExt;
 use serde::Deserialize;
+use std::sync::LazyLock;
 use tracing::{error, info};
 
+#[derive(Parser)]
+struct Args {
+    #[arg(short('n'), long)]
+    container_name: String,
+    #[arg(short('k'), long)]
+    bark_key: String,
+}
+static ARGS: LazyLock<Args> = LazyLock::new(|| Args::parse());
 static BARK_CLIENT: LazyLock<AsyncBarkClient> =
-    LazyLock::new(|| AsyncBarkClient::with_device_key("https://api.day.app", "your_device_key"));
+    LazyLock::new(|| AsyncBarkClient::with_device_key("https://api.day.app", &ARGS.bark_key));
 
 fn main() {
     tracing_subscriber::fmt::init();
@@ -18,7 +26,7 @@ fn main() {
     let rt = tokio::runtime::Runtime::new().unwrap();
     rt.block_on(async {
         let docker = Docker::connect_with_local_defaults().unwrap();
-        let container_name = "";
+        let container_name = &ARGS.container_name;
 
         let mut stream = docker.logs(
             container_name,
