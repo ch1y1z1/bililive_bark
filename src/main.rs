@@ -92,8 +92,6 @@ async fn handle_message(message: &str) -> Result<()> {
             BARK_CLIENT
                 .message()
                 .title(&format!("Live Start: {}", rm.host))
-                .body("开始直播")
-                .level(Level::Active)
                 .send()
                 .await
                 .traced_dyn()?;
@@ -103,8 +101,6 @@ async fn handle_message(message: &str) -> Result<()> {
             BARK_CLIENT
                 .message()
                 .title(&format!("Live End: {}", rm.host))
-                .body("结束直播")
-                .level(Level::Active)
                 .send()
                 .await
                 .traced_dyn()?;
