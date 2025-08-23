@@ -7,7 +7,7 @@ use eros::{IntoDynTracedError, Result};
 use futures_util::stream::StreamExt;
 use serde::Deserialize;
 use std::sync::LazyLock;
-use tracing::{error, info};
+use tracing::{error, info, warn};
 
 #[derive(Parser)]
 struct Args {
@@ -71,13 +71,24 @@ struct RecorgMessage {
 async fn handle_message(message: &str) -> Result<()> {
     let message = parse::parse(message);
 
-    let rm = serde_value::to_value(message)
-        .traced_dyn()?
-        .deserialize_into::<RecorgMessage>()
-        .traced_dyn()?;
+    let rm: Result<_> = (|| {
+        Ok(serde_value::to_value(message)
+            .traced_dyn()?
+            .deserialize_into::<RecorgMessage>()
+            .traced_dyn()?)
+    })();
+
+    let rm = match rm {
+        Ok(rm) => rm,
+        Err(err) => {
+            warn!("Warn: {}", err);
+            return Ok(());
+        }
+    };
 
     match rm.msg.as_str() {
         "Live Start" => {
+            info!("Live Start: {}", rm.host);
             BARK_CLIENT
                 .message()
                 .title(&format!("Live Start: {}", rm.host))
@@ -86,6 +97,7 @@ async fn handle_message(message: &str) -> Result<()> {
                 .traced_dyn()?;
         }
         "Live end" => {
+            info!("Live End: {}", rm.host);
             BARK_CLIENT
                 .message()
                 .title(&format!("Live End: {}", rm.host))

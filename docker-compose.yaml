@@ -1,5 +1,6 @@
 services:
   bililive_bark:
+    image: bililive_bark
     container_name: bililive_bark
     build:
       context: .
@@ -7,6 +8,6 @@ services:
     restart: unless-stopped
     environment:
       - BARK_KEY=${BARK_KEY}
-      - CONTAINER_NAME=bililive_bark
+      - CONTAINER_NAME=bililive-go
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

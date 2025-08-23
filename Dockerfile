@@ -2,6 +2,8 @@ FROM rust:1-alpine3.22 AS builder
 
 WORKDIR /usr/src/app
 
+RUN apk add --no-cache build-base openssl-dev openssl-libs-static
+
 COPY Cargo.toml Cargo.lock ./
 COPY src ./src
 
