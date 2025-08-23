@@ -58,18 +58,18 @@ fn main() {
     });
 }
 
+#[allow(dead_code)]
 #[derive(Deserialize)]
 struct RecorgMessage {
-    _time: String,
-    _level: String,
+    time: String,
+    level: String,
     msg: String,
     host: String,
-    _room: String,
+    room: String,
 }
 
 async fn handle_message(message: &str) -> Result<()> {
     let message = parse::parse(message);
-    info!("Received message: {:?}", message);
 
     let rm = serde_value::to_value(message)
         .traced_dyn()?
