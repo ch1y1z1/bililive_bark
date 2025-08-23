@@ -9,7 +9,7 @@ COPY src ./src
 
 RUN cargo build --release
 
-FROM scratch AS final
+FROM alpine:3.22 AS final
 
 COPY --from=builder /usr/src/app/target/release/bililive_bark /bililive_bark
 
