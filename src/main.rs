@@ -96,7 +96,7 @@ async fn handle_message(message: &str) -> Result<()> {
                 .await
                 .traced_dyn()?;
         }
-        "Live end" => {
+        "<nil>" => {
             info!("Live End: {}", rm.host);
             BARK_CLIENT
                 .message()
