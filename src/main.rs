@@ -1,6 +1,6 @@
 mod parse;
 
-use bark_rs::{AsyncBarkClient, Level};
+use bark_rs::AsyncBarkClient;
 use bollard::{Docker, container::LogOutput, query_parameters::LogsOptions};
 use clap::Parser;
 use eros::{IntoDynTracedError, Result};
