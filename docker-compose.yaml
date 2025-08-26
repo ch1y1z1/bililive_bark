@@ -1,6 +1,6 @@
 services:
   bililive_bark:
-    image: bililive_bark
+    image: ch1y1z1p/bililive_bark
     container_name: bililive_bark
     build:
       context: .
