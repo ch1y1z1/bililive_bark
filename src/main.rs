@@ -60,7 +60,7 @@ fn main() {
 
 #[allow(dead_code)]
 #[derive(Deserialize)]
-struct RecorgMessage {
+struct RecordMessage {
     time: String,
     level: String,
     msg: String,
@@ -74,7 +74,7 @@ async fn handle_message(message: &str) -> Result<()> {
     let rm: Result<_> = (|| {
         Ok(serde_value::to_value(message)
             .traced_dyn()?
-            .deserialize_into::<RecorgMessage>()
+            .deserialize_into::<RecordMessage>()
             .traced_dyn()?)
     })();
 
