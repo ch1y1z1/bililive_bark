@@ -55,6 +55,8 @@ fn main() {
                 Err(err) => error!("Error during log streaming: {}", err),
             }
         }
+
+        error!("Log stream ended unexpectedly");
     });
 }
 
