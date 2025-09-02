@@ -3,7 +3,7 @@ mod parse;
 use bark_rs::AsyncBarkClient;
 use bollard::{Docker, container::LogOutput, query_parameters::LogsOptions};
 use clap::Parser;
-use eros::{IntoDynTracedError, Result};
+use eros::{IntoDynTracedError, Result, bail};
 use futures_util::stream::StreamExt;
 use serde::Deserialize;
 use std::sync::LazyLock;
@@ -71,7 +71,12 @@ struct RecordMessage {
 }
 
 async fn handle_message(message: &str) -> Result<()> {
-    let message = parse::parse(message);
+    let message = match parse::parse(message) {
+        Some(m) => m,
+        None => {
+            bail!("Failed to parse message");
+        }
+    };
 
     let rm: Result<_> = (|| {
         Ok(serde_value::to_value(message)

@@ -12,7 +12,7 @@ bollard = "0.19.2"
 clap = { version = "4.5.45", features = ["derive", "env"] }
 eros = "0.1.0"
 futures-util = "0.3.31"
-logfmt = { git = "https://github.com/ch1y1z1/logfmt.git", version = "0.0.2" }
+logfmt_parse = { git = "https://github.com/ch1y1z1/logfmt_parse.git", version = "0.1.0" }
 serde = { version = "1.0.219", features = ["derive"] }
 serde-value = "0.7.0"
 tokio = "1.47.1"
